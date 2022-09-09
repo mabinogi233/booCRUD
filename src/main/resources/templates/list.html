@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>图书表</title>
+    <style>
+        table{border-collapse:collapse;}
+        table,th, td{border: 1px solid black;padding: 5px;text-align: center;}
+    </style>
+</head>
+<body>
+<br/>
+<br/>
+<a href="/AdmBook/edit">新增图书</a>
+<br/>
+<br/>
+<table>
+    <thead>
+    <th width="20%">bId</th>
+    <th width="20%">bName</th>
+    <th width="20%">classify</th>
+    <th width="20%">publish</th>
+    <th width="20%">bSummary</th>
+    <th width="20%">data</th>
+    <th width="20%">操作</th>
+    </thead>
+    <tbody>
+    <!--/*@thymesVar id="books" type="java.util.List"*/-->
+    <tr th:each="book : ${books}">
+        <td th:text="${book.bId}"></td>
+        <td th:text="${book.bName}"></td>
+        <td th:text="${book.classify}"></td>
+        <td th:text="${book.publish}"></td>
+        <td th:text="${book.bSummary}"></td>
+        <td th:text="${book.data}"></td>
+        <td>
+            <a th:href="@{/AdmBook/edit(id=${book.bId})}">编辑</a> &nbsp;&nbsp;
+            <a th:href="@{/AdmBook/del(id=${book.bId})}">删除</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

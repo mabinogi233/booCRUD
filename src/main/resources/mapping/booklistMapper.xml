@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hellotest.dao.booklistMapper">
+  <resultMap id="BaseResultMap" type="com.example.hellotest.entity.booklist">
+    <id column="B_id" jdbcType="INTEGER" property="bId" />
+    <result column="data" jdbcType="VARCHAR" property="data" />
+    <result column="publish" jdbcType="VARCHAR" property="publish" />
+    <result column="classify" jdbcType="VARCHAR" property="classify" />
+    <result column="B_summary" jdbcType="VARCHAR" property="bSummary" />
+    <result column="B_name" jdbcType="VARCHAR" property="bName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    B_id, data, publish, classify, B_summary, B_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from booklist
+    where B_id = #{bId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from booklist
+    where B_id = #{bId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.hellotest.entity.booklist">
+    insert into booklist (B_id, data, publish, 
+      classify, B_summary, B_name
+      )
+    values (#{bId,jdbcType=INTEGER}, #{data,jdbcType=VARCHAR}, #{publish,jdbcType=VARCHAR}, 
+      #{classify,jdbcType=VARCHAR}, #{bSummary,jdbcType=VARCHAR}, #{bName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.hellotest.entity.booklist">
+    insert into booklist
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bId != null">
+        B_id,
+      </if>
+      <if test="data != null">
+        data,
+      </if>
+      <if test="publish != null">
+        publish,
+      </if>
+      <if test="classify != null">
+        classify,
+      </if>
+      <if test="bSummary != null">
+        B_summary,
+      </if>
+      <if test="bName != null">
+        B_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bId != null">
+        #{bId,jdbcType=INTEGER},
+      </if>
+      <if test="data != null">
+        #{data,jdbcType=VARCHAR},
+      </if>
+      <if test="publish != null">
+        #{publish,jdbcType=VARCHAR},
+      </if>
+      <if test="classify != null">
+        #{classify,jdbcType=VARCHAR},
+      </if>
+      <if test="bSummary != null">
+        #{bSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="bName != null">
+        #{bName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.hellotest.entity.booklist">
+    update booklist
+    <set>
+      <if test="data != null">
+        data = #{data,jdbcType=VARCHAR},
+      </if>
+      <if test="publish != null">
+        publish = #{publish,jdbcType=VARCHAR},
+      </if>
+      <if test="classify != null">
+        classify = #{classify,jdbcType=VARCHAR},
+      </if>
+      <if test="bSummary != null">
+        B_summary = #{bSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="bName != null">
+        B_name = #{bName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where B_id = #{bId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.hellotest.entity.booklist">
+    update booklist
+    set data = #{data,jdbcType=VARCHAR},
+      publish = #{publish,jdbcType=VARCHAR},
+      classify = #{classify,jdbcType=VARCHAR},
+      B_summary = #{bSummary,jdbcType=VARCHAR},
+      B_name = #{bName,jdbcType=VARCHAR}
+    where B_id = #{bId,jdbcType=INTEGER}
+  </update>
+
+  <!--自定义sql-->
+  <select id="findAll" resultMap="BaseResultMap">
+		select * from booklist
+  </select>
+
+
+  <select id="getByPublish" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select * from booklist
+		where publish = "%"#{publish,jdbcType=VARCHAR}"%"
+  </select>
+
+  <select id="getByBname" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select * from booklist
+		where B_name like "%"#{bName,jdbcType=VARCHAR}"%"
+  </select>
+
+  <select id="getByClassify" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select * from booklist
+		where classify = #{classify,jdbcType=VARCHAR}
+  </select>
+
+
+
+</mapper>
